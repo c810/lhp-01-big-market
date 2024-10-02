@@ -157,4 +157,13 @@ public class StrategyRepository implements IStrategyRepository {
                 .build();
         // TODO: 这里也可以写入缓存，但是为了后续开发方便，暂时不写入缓存
     }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
 }
