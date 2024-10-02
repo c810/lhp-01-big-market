@@ -10,19 +10,12 @@ package pub.lhp.domain.strategy.service.armory;
 public interface IStrategyArmory {
 
     /**
-     * 装配抽奖策略配置「触发的时机可以为活动审核通过后进行调用」
-     * 只需要告知策略ID，即可完成策略的装配
+     * 装配 策略奖品概率查找表
+     * 触发的时机可以为活动审核通过后进行调用
      *
      * @param strategyId 策略ID
      * @return 装配结果
      */
-    void assembleLotteryStrategy(Long strategyId);
-
-    /**
-     * 获取随机奖品ID
-     * @param strategyId 策略ID
-     * @return 随机奖品ID
-     */
-    Integer getRandomAwardId(Long strategyId);
+    boolean assembleLotteryStrategy(Long strategyId);
 
 }

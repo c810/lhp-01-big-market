@@ -2,6 +2,8 @@ package pub.lhp.domain.strategy.repository;
 
 import org.springframework.stereotype.Repository;
 import pub.lhp.domain.strategy.model.entity.StrategyAwardEntity;
+import pub.lhp.domain.strategy.model.entity.StrategyEntity;
+import pub.lhp.domain.strategy.model.entity.StrategyRuleEntity;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -16,27 +18,57 @@ import java.util.List;
  */
 public interface IStrategyRepository {
     /**
-     * 查询策略奖品列表
-     * 查询策略配置
+     * 查询 策略奖品列表
+     *
      * @param strategyId 策略ID
      * @return 策略奖品列表
      */
     List<StrategyAwardEntity> queryStrategyAwardList(Long strategyId);
 
     /**
-     * 存储策略奖品概率查找表
-     * @param strategyId 策略ID
-     * @param rateRange 概率值区间
-     * @param shuffleStrategyAwardRateSearchTable 概率值查找表
+     * 存储 策略奖品概率查找表
+     * @param key 策略ID(_权重规则)
+     * @param rateRange 概率区间
+     * @param shuffleStrategyAwardRateSearchTable 策略奖品概率查找表
      */
-    void storeStrategyAwardRateSearchTable(Long strategyId, BigDecimal rateRange, HashMap<Integer, Integer> shuffleStrategyAwardRateSearchTable);
+    void storeStrategyAwardRateSearchTable(String key, BigDecimal rateRange, HashMap<Integer, Integer> shuffleStrategyAwardRateSearchTable);
 
     /**
-     * 获取概率值区间
+     * 获取 概率区间
+     * TODO: 可以去掉这个方法，因为已经有了 getRateRange(String key)
+     *
      * @param strategyId 策略ID
-     * @return 概率值区间
+     * @return 概率区间
      */
-    int getRateRange(Long strategyId);
+//    int getRateRange(Long strategyId);
 
-    Integer getStrategyAwardAssemble(Long strategyId, int rateKey);
+    /**
+     * 获取 概率区间
+     * @param key 策略ID(_权重规则)
+     * @return 概率区间
+     */
+    int getRateRange(String key);
+
+    /**
+     * 获取 随机奖品ID
+     * @param key 策略ID(_权重规则)
+     * @param randomNum 随机数
+     * @return 随机奖品ID
+     */
+    Integer getStrategyAwardAssemble(String key, int randomNum);
+
+    /**
+     * 查询 策略
+     * @param strategyId 策略ID
+     * @return 策略
+     */
+    StrategyEntity queryStrategyEntityByStrategyId(Long strategyId);
+
+    /**
+     * 查询 策略规则
+     * @param strategyId 策略ID
+     * @param ruleModel 规则模型
+     * @return 策略规则
+     */
+    StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleModel);
 }

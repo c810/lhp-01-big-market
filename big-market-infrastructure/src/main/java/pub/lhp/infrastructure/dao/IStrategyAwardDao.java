@@ -1,7 +1,6 @@
 package pub.lhp.infrastructure.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import pub.lhp.domain.strategy.service.armory.StrategyArmory;
 import pub.lhp.infrastructure.dao.po.StrategyAward;
 
 import java.util.List;
@@ -15,8 +14,13 @@ import java.util.List;
  */
 @Mapper
 public interface IStrategyAwardDao {
-    List<StrategyAward> queryStrategyAwardList();
+    List<StrategyAward> queryStrategyAwardList(); // 好像还没被用到
 
+    /**
+     * 查询 策略奖品列表
+     * @param strategyId 策略ID
+     * @return 策略奖品列表
+     */
     List<StrategyAward> queryStrategyAwardListByStrategyId(Long strategyId);
 
 }
