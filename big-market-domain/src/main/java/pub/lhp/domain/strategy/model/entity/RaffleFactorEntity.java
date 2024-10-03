@@ -30,5 +30,5 @@ public class RaffleFactorEntity {
     /**
      * 结束时间
      */
-    private Date endDateTime;
+//    private Date endDateTime;
 }

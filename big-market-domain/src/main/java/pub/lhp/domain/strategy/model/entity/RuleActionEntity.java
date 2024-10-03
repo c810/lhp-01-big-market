@@ -64,7 +64,7 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
     /**
      * 抽奖后
      */
-    static public class RaffleAfter extends RaffleEntity {
+    static public class RaffleAfterEntity extends RaffleEntity {
 
     }
 }

@@ -32,12 +32,26 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
     @Resource
     private DefaultLogicFactory logicFactory;
 
+    /**
+     * 构造函数
+     * @param repository 策略仓储服务
+     * @param strategyDispatch 策略调度服务
+     */
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch) {
         super(repository, strategyDispatch);
     }
 
+    /**
+     * 执行抽奖前规则过滤
+     * @param raffleFactorEntity 抽奖因子
+     * @param logics 规则模型
+     * @return 规则过滤结果（执行后规则动作实体）
+     */
     @Override
     protected RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> doCheckRaffleBeforeLogic(RaffleFactorEntity raffleFactorEntity, String... logics) {
+        // 获取逻辑过滤器
+        // 键是逻辑模式代码，比如：DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode()，即 rule_blacklist
+        // 值是逻辑过滤器
         Map<String, ILogicFilter<RuleActionEntity.RaffleBeforeEntity>> logicFilterGroup = logicFactory.openLogicFilter();
 
         // 黑名单规则优先过滤
@@ -46,12 +60,14 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
                 .findFirst()
                 .orElse(null);
 
+        // 如果存在黑名单规则，则优先过滤
         if (StringUtils.isNotBlank(ruleBackList)) {
+            // 获取黑名单逻辑过滤器
             ILogicFilter<RuleActionEntity.RaffleBeforeEntity> logicFilter = logicFilterGroup.get(DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode());
             RuleMatterEntity ruleMatterEntity = new RuleMatterEntity();
             ruleMatterEntity.setUserId(raffleFactorEntity.getUserId());
-            ruleMatterEntity.setAwardId(ruleMatterEntity.getAwardId());
             ruleMatterEntity.setStrategyId(raffleFactorEntity.getStrategyId());
+            ruleMatterEntity.setAwardId(ruleMatterEntity.getAwardId());
             ruleMatterEntity.setRuleModel(DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode());
             RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> ruleActionEntity = logicFilter.filter(ruleMatterEntity);
             if (!RuleLogicCheckTypeVO.ALLOW.getCode().equals(ruleActionEntity.getCode())) {
@@ -69,8 +85,8 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
             ILogicFilter<RuleActionEntity.RaffleBeforeEntity> logicFilter = logicFilterGroup.get(ruleModel);
             RuleMatterEntity ruleMatterEntity = new RuleMatterEntity();
             ruleMatterEntity.setUserId(raffleFactorEntity.getUserId());
-            ruleMatterEntity.setAwardId(ruleMatterEntity.getAwardId());
             ruleMatterEntity.setStrategyId(raffleFactorEntity.getStrategyId());
+            ruleMatterEntity.setAwardId(ruleMatterEntity.getAwardId());
             ruleMatterEntity.setRuleModel(ruleModel);
             ruleActionEntity = logicFilter.filter(ruleMatterEntity);
             // 非放行结果则顺序过滤

@@ -34,20 +34,30 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         this.strategyDispatch = strategyDispatch;
     }
 
+    /**
+     * 执行抽奖
+     *
+     * @param raffleFactorEntity 抽奖因子
+     * @return 抽奖奖品
+     */
     @Override
     public RaffleAwardEntity performRaffle(RaffleFactorEntity raffleFactorEntity) {
         // 1. 参数校验
         String userId = raffleFactorEntity.getUserId();
         Long strategyId = raffleFactorEntity.getStrategyId();
-        if (null == strategyId || StringUtils.isBlank(userId)) {
+        if (null == strategyId || StringUtils.isBlank(userId))
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
-        }
 
-        // 2. 策略查询
+        // 2. 查询 策略
         StrategyEntity strategy = repository.queryStrategyEntityByStrategyId(strategyId);
 
-        // 3. 抽奖前 - 规则过滤
-        RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> ruleActionEntity = this.doCheckRaffleBeforeLogic(RaffleFactorEntity.builder().userId(userId).strategyId(strategyId).build(), strategy.ruleModels());
+        // 3. 抽奖前动作 - 规则过滤
+        RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> ruleActionEntity = this.doCheckRaffleBeforeLogic(
+                RaffleFactorEntity.builder()
+                        .userId(userId)
+                        .strategyId(strategyId)
+                        .build(),
+                strategy.ruleModels());
 
         if (RuleLogicCheckTypeVO.TAKE_OVER.getCode().equals(ruleActionEntity.getCode())) {
             if (DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode().equals(ruleActionEntity.getRuleModel())) {
@@ -74,5 +84,12 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
                 .build();
     }
 
+    /**
+     * 抽奖前动作 - 规则过滤
+     *
+     * @param raffleFactorEntity 抽奖因子
+     * @param logics 规则模型
+     * @return 规则过滤结果（执行后规则动作实体）
+     */
     protected abstract RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> doCheckRaffleBeforeLogic(RaffleFactorEntity raffleFactorEntity, String... logics);
 }

@@ -86,19 +86,21 @@ public class RuleWeightLogicFilter implements ILogicFilter<RuleActionEntity.Raff
                 .build();
     }
 
+    /**
+     * 解析 规则值
+     * @param ruleValue 规则值
+     * @return 规则值Map
+     */
     private Map<Long, String> getAnalyticalValue(String ruleValue) {
         String[] ruleValueGroups = ruleValue.split(Constants.SPACE);
         Map<Long, String> ruleValueMap = new HashMap<>();
         for (String ruleValueKey : ruleValueGroups) {
             // 检查输入是否为空
-            if (ruleValueKey == null || ruleValueKey.isEmpty()) {
-                return ruleValueMap;
-            }
+            if (ruleValueKey == null || ruleValueKey.isEmpty()) return ruleValueMap;
             // 分割字符串以获取键和值
             String[] parts = ruleValueKey.split(Constants.COLON);
-            if (parts.length != 2) {
+            if (parts.length != 2)
                 throw new IllegalArgumentException("rule_weight rule_rule invalid input format" + ruleValueKey);
-            }
             ruleValueMap.put(Long.parseLong(parts[0]), ruleValueKey);
         }
         return ruleValueMap;

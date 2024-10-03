@@ -29,22 +29,31 @@ public class RuleBackListLogicFilter implements ILogicFilter<RuleActionEntity.Ra
     @Resource
     private IStrategyRepository repository;
 
+    /**
+     * 过滤黑名单用户
+     * @param ruleMatterEntity 规则物料
+     * @return 规则过滤结果（执行后规则动作实体）
+     */
     @Override
     public RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> filter(RuleMatterEntity ruleMatterEntity) {
         log.info("规则过滤-黑名单 userId:{} strategyId:{} ruleModel:{}", ruleMatterEntity.getUserId(), ruleMatterEntity.getStrategyId(), ruleMatterEntity.getRuleModel());
 
         String userId = ruleMatterEntity.getUserId();
 
-        // 查询规则值配置
+        // 查询 策略规则值
+        // 这里，ruleModel 是 rule_blacklist，即黑名单规则
+        // ruleValue 的格式是：101:user001,user002,user003
         String ruleValue = repository.queryStrategyRuleValue(ruleMatterEntity.getStrategyId(), ruleMatterEntity.getAwardId(), ruleMatterEntity.getRuleModel());
         String[] splitRuleValue = ruleValue.split(Constants.COLON);
         Integer awardId = Integer.parseInt(splitRuleValue[0]);
 
-        // 100:user001,user002,user003
+        // 101:user001,user002,user003
         // 过滤其他规则
         String[] userBlackIds = splitRuleValue[1].split(Constants.SPLIT);
         for (String userBlackId : userBlackIds) {
+            // 如果用户在黑名单中
             if (userId.equals(userBlackId)) {
+                // 则返回规则动作实体
                 return RuleActionEntity.<RuleActionEntity.RaffleBeforeEntity>builder()
                         .ruleModel(DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode())
                         .data(RuleActionEntity.RaffleBeforeEntity.builder()

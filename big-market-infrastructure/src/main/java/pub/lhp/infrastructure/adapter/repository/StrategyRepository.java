@@ -158,6 +158,13 @@ public class StrategyRepository implements IStrategyRepository {
         // TODO: 这里也可以写入缓存，但是为了后续开发方便，暂时不写入缓存
     }
 
+    /**
+     * 查询 策略规则值
+     * @param strategyId 策略ID
+     * @param awardId 奖品ID
+     * @param ruleModel 规则模型
+     * @return 策略规则值
+     */
     @Override
     public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
         StrategyRule strategyRule = new StrategyRule();

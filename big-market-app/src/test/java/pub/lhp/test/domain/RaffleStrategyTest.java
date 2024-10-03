@@ -35,7 +35,7 @@ public class RaffleStrategyTest {
 
     @Before
     public void setUp() {
-        ReflectionTestUtils.setField(ruleWeightLogicFilter, "userScore", 40500L);
+        ReflectionTestUtils.setField(ruleWeightLogicFilter, "userScore", 5500L);
     }
 
     @Test
