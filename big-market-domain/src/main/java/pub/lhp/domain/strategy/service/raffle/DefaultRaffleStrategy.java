@@ -8,9 +8,11 @@ import pub.lhp.domain.strategy.model.entity.RuleActionEntity;
 import pub.lhp.domain.strategy.model.entity.RuleMatterEntity;
 import pub.lhp.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import pub.lhp.domain.strategy.repository.IStrategyRepository;
+import pub.lhp.domain.strategy.service.AbstractRaffleStrategy;
 import pub.lhp.domain.strategy.service.armory.IStrategyDispatch;
 import pub.lhp.domain.strategy.service.rule.ILogicFilter;
-import pub.lhp.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import pub.lhp.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
+import pub.lhp.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -37,8 +39,8 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
      * @param repository 策略仓储服务
      * @param strategyDispatch 策略调度服务
      */
-    public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch) {
-        super(repository, strategyDispatch);
+    public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory) {
+        super(repository, strategyDispatch, defaultChainFactory);
     }
 
     /**

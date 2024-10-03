@@ -32,7 +32,7 @@ public class AwardDaoTest {
     private IAwardDao awardDao;
 
     @Test
-    public void testQueryAwardList() {
+    public void test_queryAwardList() {
         List<Award> awards = awardDao.queryAwardList();
         // 将奖品列表转换成JSON字符串格式输出
         log.info("奖品列表: {}", JSON.toJSONString(awards));

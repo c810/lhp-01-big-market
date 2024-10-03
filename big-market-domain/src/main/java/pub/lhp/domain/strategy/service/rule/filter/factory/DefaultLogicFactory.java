@@ -1,4 +1,4 @@
-package pub.lhp.domain.strategy.service.rule.factory;
+package pub.lhp.domain.strategy.service.rule.filter.factory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -12,8 +12,8 @@ import pub.lhp.domain.strategy.model.entity.RaffleAwardEntity;
 import pub.lhp.domain.strategy.model.entity.RaffleFactorEntity;
 import pub.lhp.domain.strategy.service.IRaffleStrategy;
 import pub.lhp.domain.strategy.service.armory.IStrategyArmory;
-import pub.lhp.domain.strategy.service.rule.impl.RuleLockLogicFilter;
-import pub.lhp.domain.strategy.service.rule.impl.RuleWeightLogicFilter;
+import pub.lhp.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
+import pub.lhp.domain.strategy.service.rule.filter.impl.RuleLockLogicFilter;
 
 import javax.annotation.Resource;
 
@@ -34,7 +34,7 @@ public class RaffleStrategyTest {
     @Resource
     private IRaffleStrategy raffleStrategy;
     @Resource
-    private RuleWeightLogicFilter ruleWeightLogicFilter;
+    private RuleWeightLogicChain ruleWeightLogicChain;
     @Resource
     private RuleLockLogicFilter ruleLockLogicFilter;
 
@@ -46,12 +46,12 @@ public class RaffleStrategyTest {
         log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100003L));
 
         // 通过反射 mock 规则中的值
-        ReflectionTestUtils.setField(ruleWeightLogicFilter, "userScore", 5500L);
+        ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 5500L);
         ReflectionTestUtils.setField(ruleLockLogicFilter, "userRaffleCount", 10L);
     }
 
     @Test
-    public void testPerformRaffle() {
+    public void test_performRaffle() {
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
                 .userId("lihaopeng")
                 .strategyId(100001L)
@@ -64,7 +64,7 @@ public class RaffleStrategyTest {
     }
 
     @Test
-    public void testPerformRaffleBlacklist() {
+    public void test_performRaffle_blacklist() {
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
                 .userId("user003") // 黑名单用户 user001,user002,user003
                 .strategyId(100001L)
@@ -81,7 +81,7 @@ public class RaffleStrategyTest {
      * ReflectionTestUtils.setField(ruleLockLogicFilter, "userRaffleCount", 10L);
      */
     @Test
-    public void testRaffleCenterRuleLock(){
+    public void test_raffle_center_rule_lock(){
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
                 .userId("lihaopeng")
                 .strategyId(100003L)
