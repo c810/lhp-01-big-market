@@ -28,6 +28,10 @@ public class RaffleFactorEntity {
      */
     private Long strategyId;
     /**
+     * 奖品ID
+     */
+    private Integer awardId;
+    /**
      * 结束时间
      */
 //    private Date endDateTime;

@@ -1,7 +1,7 @@
 package pub.lhp.domain.strategy.model.entity;
 
 import lombok.*;
-import pub.lhp.domain.strategy.model.vo.RuleLogicCheckTypeVO;
+import pub.lhp.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 
 /**
  * @author lihaopeng
@@ -22,7 +22,6 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
     private String info = RuleLogicCheckTypeVO.ALLOW.getInfo();
     private String ruleModel;
     private T data;
-
 
 
     static public class RaffleEntity {
@@ -57,7 +56,7 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
     /**
      * 抽奖中
      */
-    static public class RaffleInEntity extends RaffleEntity {
+    static public class RaffleCenterEntity extends RaffleEntity {
 
     }
 

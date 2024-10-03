@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pub.lhp.domain.strategy.model.entity.RuleActionEntity;
 import pub.lhp.domain.strategy.model.entity.RuleMatterEntity;
-import pub.lhp.domain.strategy.model.vo.RuleLogicCheckTypeVO;
+import pub.lhp.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import pub.lhp.domain.strategy.repository.IStrategyRepository;
 import pub.lhp.domain.strategy.service.annotation.LogicStrategy;
 import pub.lhp.domain.strategy.service.rule.ILogicFilter;

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import pub.lhp.domain.strategy.model.entity.StrategyAwardEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyRuleEntity;
+import pub.lhp.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import pub.lhp.domain.strategy.repository.IStrategyRepository;
 import pub.lhp.infrastructure.dao.IStrategyAwardDao;
 import pub.lhp.infrastructure.dao.IStrategyDao;
@@ -172,5 +173,14 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRule.setAwardId(awardId);
         strategyRule.setRuleModel(ruleModel);
         return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    @Override
+    public StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId) {
+        StrategyAward strategyAward = new StrategyAward();
+        strategyAward.setStrategyId(strategyId);
+        strategyAward.setAwardId(awardId);
+        String ruleModels = strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
+        return StrategyAwardRuleModelVO.builder().ruleModels(ruleModels).build();
     }
 }
