@@ -13,7 +13,6 @@ import pub.lhp.domain.strategy.model.entity.RaffleFactorEntity;
 import pub.lhp.domain.strategy.service.IRaffleStrategy;
 import pub.lhp.domain.strategy.service.armory.IStrategyArmory;
 import pub.lhp.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
-import pub.lhp.domain.strategy.service.rule.filter.impl.RuleLockLogicFilter;
 
 import javax.annotation.Resource;
 
@@ -35,8 +34,6 @@ public class RaffleStrategyTest {
     private IRaffleStrategy raffleStrategy;
     @Resource
     private RuleWeightLogicChain ruleWeightLogicChain;
-    @Resource
-    private RuleLockLogicFilter ruleLockLogicFilter;
 
     @Before
     public void setUp() {
@@ -47,7 +44,6 @@ public class RaffleStrategyTest {
 
         // 通过反射 mock 规则中的值
         ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 5500L);
-        ReflectionTestUtils.setField(ruleLockLogicFilter, "userRaffleCount", 10L);
     }
 
     @Test

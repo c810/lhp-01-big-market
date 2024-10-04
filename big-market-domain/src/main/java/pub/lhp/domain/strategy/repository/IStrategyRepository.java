@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import pub.lhp.domain.strategy.model.entity.StrategyAwardEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyRuleEntity;
+import pub.lhp.domain.strategy.model.valobj.RuleTreeVO;
 import pub.lhp.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 
 import java.math.BigDecimal;
@@ -85,4 +86,6 @@ public interface IStrategyRepository {
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
 
     StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
+
+    RuleTreeVO queryRuleTreeVOByTreeId(String treeId);
 }
