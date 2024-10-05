@@ -2,16 +2,21 @@ package pub.lhp.domain.strategy.service.raffle;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pub.lhp.domain.strategy.model.entity.StrategyAwardEntity;
 import pub.lhp.domain.strategy.model.valobj.RuleTreeVO;
 import pub.lhp.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import pub.lhp.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import pub.lhp.domain.strategy.repository.IStrategyRepository;
 import pub.lhp.domain.strategy.service.AbstractRaffleStrategy;
+import pub.lhp.domain.strategy.service.IRaffleAward;
+import pub.lhp.domain.strategy.service.IRaffleStock;
 import pub.lhp.domain.strategy.service.armory.IStrategyDispatch;
 import pub.lhp.domain.strategy.service.rule.chain.ILogicChain;
 import pub.lhp.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import pub.lhp.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import pub.lhp.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
+
+import java.util.List;
 
 /**
  * @author lihaopeng
@@ -22,7 +27,7 @@ import pub.lhp.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEng
  */
 @Slf4j
 @Service
-public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
+public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRaffleAward, IRaffleStock {
 
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory) {
         super(repository, strategyDispatch, defaultChainFactory, defaultTreeFactory);
@@ -56,6 +61,11 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
     @Override
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
         repository.updateStrategyAwardStock(strategyId, awardId);
+    }
+
+    @Override
+    public List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId) {
+        return repository.queryStrategyAwardList(strategyId);
     }
 
 }

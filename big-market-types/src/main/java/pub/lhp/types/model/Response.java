@@ -1,4 +1,4 @@
-package pub.lhp.api.response;
+package pub.lhp.types.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
