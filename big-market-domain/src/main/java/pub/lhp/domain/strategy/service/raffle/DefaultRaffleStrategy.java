@@ -1,29 +1,17 @@
 package pub.lhp.domain.strategy.service.raffle;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import pub.lhp.domain.strategy.model.entity.RaffleFactorEntity;
-import pub.lhp.domain.strategy.model.entity.RuleActionEntity;
-import pub.lhp.domain.strategy.model.entity.RuleMatterEntity;
-import pub.lhp.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import pub.lhp.domain.strategy.model.valobj.RuleTreeVO;
 import pub.lhp.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import pub.lhp.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import pub.lhp.domain.strategy.repository.IStrategyRepository;
 import pub.lhp.domain.strategy.service.AbstractRaffleStrategy;
 import pub.lhp.domain.strategy.service.armory.IStrategyDispatch;
-import pub.lhp.domain.strategy.service.rule.ILogicFilter;
 import pub.lhp.domain.strategy.service.rule.chain.ILogicChain;
 import pub.lhp.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
-import pub.lhp.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import pub.lhp.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import pub.lhp.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
-
-import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author lihaopeng
@@ -58,6 +46,16 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
         }
         IDecisionTreeEngine treeEngine = defaultTreeFactory.openLogicTree(ruleTreeVO);
         return treeEngine.process(userId, strategyId, awardId);
+    }
+
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+        return repository.takeQueueValue();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        repository.updateStrategyAwardStock(strategyId, awardId);
     }
 
 }

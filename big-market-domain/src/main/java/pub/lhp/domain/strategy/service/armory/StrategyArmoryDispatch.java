@@ -6,6 +6,7 @@ import pub.lhp.domain.strategy.model.entity.StrategyAwardEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyRuleEntity;
 import pub.lhp.domain.strategy.repository.IStrategyRepository;
+import pub.lhp.types.common.Constants;
 import pub.lhp.types.enums.ResponseCode;
 import pub.lhp.types.exception.AppException;
 
@@ -29,6 +30,8 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
     @Resource
     private IStrategyRepository repository;
 
+    private final SecureRandom secureRandom = new SecureRandom();
+
     /**
      * 装配 策略奖品概率查找表
      * 触发的时机可以为活动审核通过后进行调用
@@ -41,10 +44,20 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         // 1.装配 策略奖品概率查找表（没有权重规则的、该策略下所有奖品都能抽）
         // 查询 策略ID 对应的 策略奖品列表
         List<StrategyAwardEntity> strategyAwardEntities = repository.queryStrategyAwardList(strategyId);
+
+        // 2 缓存奖品库存【用于decr扣减库存使用】
+        for (StrategyAwardEntity strategyAward : strategyAwardEntities) {
+            Integer awardId = strategyAward.getAwardId();
+            Integer awardCount = strategyAward.getAwardCount();
+            cacheStrategyAwardCount(strategyId, awardId, awardCount);
+        }
+
+        // 3.1 默认装配配置【全量抽奖概率】
         // 装配 策略奖品概率查找表（没有权重规则的、该策略下所有奖品都能抽）
         assembleLotteryStrategy(String.valueOf(strategyId), strategyAwardEntities);
 
-        // 2.装配 策略奖品概率查找表（有权重规则的、抽够一定次数后可以去掉比较差的奖品）
+        // 3.2 权重策略配置
+        // 装配 策略奖品概率查找表（有权重规则的、抽够一定次数后可以去掉比较差的奖品）
         // 查询 策略
         StrategyEntity strategyEntity = repository.queryStrategyEntityByStrategyId(strategyId);
         // 获取 策略 是否有 权重规则
@@ -117,6 +130,18 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
     }
 
     /**
+     * 缓存奖品库存到Redis
+     *
+     * @param strategyId 策略ID
+     * @param awardId    奖品ID
+     * @param awardCount 奖品库存
+     */
+    private void cacheStrategyAwardCount(Long strategyId, Integer awardId, Integer awardCount) {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
+        repository.cacheStrategyAwardCount(cacheKey, awardCount);
+    }
+
+    /**
      * 获取 随机奖品ID
      *
      * @param strategyId 策略ID
@@ -147,5 +172,11 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         // 获取 随机奖品ID
         // 抽奖，通过生成的随机数，获取概率值奖品查找表的结果
         return repository.getStrategyAwardAssemble(key, new SecureRandom().nextInt(rateRange));
+    }
+
+    @Override
+    public Boolean subtractionAwardStock(Long strategyId, Integer awardId) {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
+        return repository.subtractionAwardStock(cacheKey);
     }
 }
