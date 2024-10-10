@@ -41,34 +41,31 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
      */
     @Override
     public boolean assembleLotteryStrategy(Long strategyId) {
-        // 1.装配 策略奖品概率查找表（没有权重规则的、该策略下所有奖品都能抽）
-        // 查询 策略ID 对应的 策略奖品列表
+        // 1.查询 策略ID 对应的 策略奖品列表
         List<StrategyAwardEntity> strategyAwardEntities = repository.queryStrategyAwardList(strategyId);
 
-        // 2 缓存奖品库存【用于decr扣减库存使用】
+        // 2.缓存奖品库存【用于decr扣减库存使用】
         for (StrategyAwardEntity strategyAward : strategyAwardEntities) {
             Integer awardId = strategyAward.getAwardId();
             Integer awardCount = strategyAward.getAwardCount();
             cacheStrategyAwardCount(strategyId, awardId, awardCount);
         }
 
-        // 3.1 默认装配配置【全量抽奖概率】
+        // 3.默认装配配置【全量抽奖概率】
         // 装配 策略奖品概率查找表（没有权重规则的、该策略下所有奖品都能抽）
         assembleLotteryStrategy(String.valueOf(strategyId), strategyAwardEntities);
 
-        // 3.2 权重策略配置
-        // 装配 策略奖品概率查找表（有权重规则的、抽够一定次数后可以去掉比较差的奖品）
-        // 查询 策略
+        // 4.权重策略配置
+        // 4.1.查询 策略，判断是否有 权重规则，有则查询 权重规则
         StrategyEntity strategyEntity = repository.queryStrategyEntityByStrategyId(strategyId);
-        // 获取 策略 是否有 权重规则
         String ruleWeight = strategyEntity.getRuleWeight();
         if (null == ruleWeight) return true;
-        // 查询 策略规则 中的 权重规则
         StrategyRuleEntity strategyRuleEntity = repository.queryStrategyRule(strategyId, ruleWeight);
         if (null == strategyRuleEntity) // 业务异常，策略使用 权重规则，但策略规则中没有 权重规则的 配置
             throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(), ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
 
-        // 获取 权重规则 中的 权重值，数据案例；4000:102,103,104,105 5000:102,103,104,105,106,107 6000:102,103,104,105,106,107,108,109
+        // 4.2.获取 权重规则 中的 权重值，并装配 策略奖品概率查找表（有权重规则的、抽够一定次数后可以去掉比较差的奖品）
+        // 数据案例；4000:102,103,104,105 5000:102,103,104,105,106,107 6000:102,103,104,105,106,107,108,109
         Map<String, List<Integer>> ruleWeightValueMap = strategyRuleEntity.getRuleWeightValues();
         Set<String> keys = ruleWeightValueMap.keySet(); // 4000、5000、6000
         for (String key : keys) {
@@ -176,7 +173,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
 
     @Override
     public Boolean subtractionAwardStock(Long strategyId, Integer awardId) {
-        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId; // strategy_award_count_key_100001_107
         return repository.subtractionAwardStock(cacheKey);
     }
 }

@@ -38,15 +38,6 @@ public interface IStrategyRepository {
 
     /**
      * 获取 概率区间
-     * TODO: 可以去掉这个方法，因为已经有了 getRateRange(String key)
-     *
-     * @param strategyId 策略ID
-     * @return 概率区间
-     */
-//    int getRateRange(Long strategyId);
-
-    /**
-     * 获取 概率区间
      * @param key 策略ID(_权重规则)
      * @return 概率区间
      */

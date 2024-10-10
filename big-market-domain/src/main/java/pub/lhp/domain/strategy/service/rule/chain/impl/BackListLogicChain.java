@@ -30,7 +30,7 @@ public class BackListLogicChain extends AbstractLogicChain {
         // 查询规则值配置
         String ruleValue = repository.queryStrategyRuleValue(strategyId, ruleModel());
         String[] splitRuleValue = ruleValue.split(Constants.COLON);
-        Integer awardId = Integer.parseInt(splitRuleValue[0]);
+        Integer awardId = Integer.parseInt(splitRuleValue[0]); // 101
 
         // 黑名单抽奖判断
         String[] userBlackIds = splitRuleValue[1].split(Constants.SPLIT);
