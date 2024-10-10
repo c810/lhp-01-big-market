@@ -98,11 +98,6 @@ public class StrategyRepository implements IStrategyRepository {
         cacheRateTable.putAll(shuffleStrategyAwardRateSearchTable);
     }
 
-//    @Override
-//    public int getRateRange(Long strategyId) {
-//        return getRateRange(String.valueOf(strategyId));
-//    }
-
     /**
      * 获取 概率区间
      * @param key 策略ID(_权重规则)
@@ -201,6 +196,7 @@ public class StrategyRepository implements IStrategyRepository {
         strategyAward.setStrategyId(strategyId);
         strategyAward.setAwardId(awardId);
         String ruleModels = strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
+        if (null == ruleModels) return null;
         return StrategyAwardRuleModelVO.builder().ruleModels(ruleModels).build();
     }
 

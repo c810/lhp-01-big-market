@@ -93,7 +93,7 @@ public class RaffleStrategyTest {
     @Test
     public void test_raffle_center_rule_lock() {
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
-                .userId("xiaofuge")
+                .userId("lihaopeng")
                 .strategyId(100003L)
                 .build();
 

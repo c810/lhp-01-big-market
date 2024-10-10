@@ -1,6 +1,5 @@
 package pub.lhp.domain.strategy.repository;
 
-import org.springframework.stereotype.Repository;
 import pub.lhp.domain.strategy.model.entity.StrategyAwardEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyEntity;
 import pub.lhp.domain.strategy.model.entity.StrategyRuleEntity;

@@ -12,7 +12,6 @@ import pub.lhp.types.exception.AppException;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -95,35 +94,45 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
 
-        // 2.获取概率值的总和
-        BigDecimal totalAwardRate = strategyAwardEntities.stream()
-                .map(StrategyAwardEntity::getAwardRate)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        // 2. 循环计算找到概率范围值
+        BigDecimal rateRange = BigDecimal.valueOf(convert(minAwardRate.doubleValue()));
 
-        // 3.计算概率值的区间
-        BigDecimal rateRange = totalAwardRate.divide(minAwardRate, 0, RoundingMode.CEILING);
-
-        // 4.生成 策略奖品概率查找表
+        // 3.生成 策略奖品概率查找表
         ArrayList<Integer> strategyAwardRateSearchTable = new ArrayList<>(rateRange.intValue());
         for (StrategyAwardEntity strategyAwardEntity : strategyAwardEntities) {
             Integer awardId = strategyAwardEntity.getAwardId();
             BigDecimal awardRate = strategyAwardEntity.getAwardRate();
             // 这里指需要在list集合中，存放上对应的奖品占位即可，占位越多等于概率越高
             // 计算出每个概率值需要存放到查找表的数量，循环填充
-            for (int i = 0; i < rateRange.multiply(awardRate).setScale(0, RoundingMode.CEILING).intValue(); i++)
+            for (int i = 0; i < rateRange.multiply(awardRate).intValue(); i++)
                 strategyAwardRateSearchTable.add(awardId);
         }
 
-        // 5.对存储的奖品进行乱序操作
+        // 4.对存储的奖品进行乱序操作
         Collections.shuffle(strategyAwardRateSearchTable);
 
-        // 6.生成出Map集合，key值，对应的就是后续的概率值。通过概率来获得对应的奖品ID
+        // 5.生成出Map集合，key值，对应的就是后续的概率值。通过概率来获得对应的奖品ID
         HashMap<Integer, Integer> shuffleStrategyAwardRateSearchTable = new HashMap<>();
         for (int i = 0; i < strategyAwardRateSearchTable.size(); i++)
             shuffleStrategyAwardRateSearchTable.put(i, strategyAwardRateSearchTable.get(i));
 
-        // 7.写入缓存
+        // 6.写入缓存
         repository.storeStrategyAwardRateSearchTable(key, BigDecimal.valueOf(shuffleStrategyAwardRateSearchTable.size()), shuffleStrategyAwardRateSearchTable);
+    }
+
+    /**
+     * 转换计算，只根据小数位来计算。如【0.01返回100】、【0.009返回1000】、【0.0018返回10000】
+     */
+    private double convert(double min) {
+        if(0 == min) return 1D;
+
+        double current = min;
+        double max = 1;
+        while (current < 1) {
+            current = current * 10;
+            max = max * 10;
+        }
+        return max;
     }
 
     /**
@@ -151,7 +160,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         int rateRange = repository.getRateRange(String.valueOf(strategyId));
         // 获取 随机奖品ID
         // 抽奖，通过生成的随机数，获取概率值奖品查找表的结果
-        return repository.getStrategyAwardAssemble(String.valueOf(strategyId), new SecureRandom().nextInt(rateRange));
+        return repository.getStrategyAwardAssemble(String.valueOf(strategyId), secureRandom.nextInt(rateRange));
     }
 
     /**

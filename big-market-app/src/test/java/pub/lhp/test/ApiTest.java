@@ -33,4 +33,14 @@ public class ApiTest {
         log.info("测试结果：{}", redisService.getFromMap("strategy_id_100001", 1).toString());
     }
 
+    private double convert(double min){
+        double current = min;
+        double max = 1;
+        while (current < 1){
+            current = current * 10;
+            max = max * 10;
+        }
+        return max;
+    }
+
 }

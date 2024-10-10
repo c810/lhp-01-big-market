@@ -9,7 +9,7 @@ import pub.lhp.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
  * @description 责任链接口
  * @since 2024/10/3 22:11
  */
-public interface ILogicChain extends ILogicChainArmory {
+public interface ILogicChain extends ILogicChainArmory, Cloneable {
 
     /**
      * 责任链接口
