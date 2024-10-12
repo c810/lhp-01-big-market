@@ -1,4 +1,4 @@
-package pub.lhp.test.domain;
+package pub.lhp.test.domain.strategy;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;

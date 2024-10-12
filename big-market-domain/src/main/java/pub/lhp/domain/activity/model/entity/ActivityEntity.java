@@ -1,6 +1,10 @@
-package pub.lhp.infrastructure.dao.po;
+package pub.lhp.domain.activity.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import pub.lhp.domain.activity.model.valobj.ActivityStateVO;
 
 import java.util.Date;
 
@@ -8,16 +12,14 @@ import java.util.Date;
  * @author lihaopeng
  * @version 1.0
  * @project big-market
- * @description 抽奖活动表 持久化对象
- * @since 2024/10/10 22:09
+ * @description 活动实体对象
+ * @since 2024/10/12 22:39
  */
 @Data
-public class RaffleActivity {
-
-    /**
-     * 自增ID
-     */
-    private Long id;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ActivityEntity {
 
     /**
      * 活动ID
@@ -45,6 +47,11 @@ public class RaffleActivity {
     private Date endDateTime;
 
     /**
+     * 活动参与次数配置
+     */
+    private Long activityCountId;
+
+    /**
      * 抽奖策略ID
      */
     private Long strategyId;
@@ -52,16 +59,6 @@ public class RaffleActivity {
     /**
      * 活动状态
      */
-    private String state;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
+    private ActivityStateVO state;
 
 }

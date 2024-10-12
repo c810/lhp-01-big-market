@@ -1,6 +1,7 @@
 package pub.lhp.infrastructure.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import pub.lhp.infrastructure.dao.po.RaffleActivityCount;
 
 /**
  * @author lihaopeng
@@ -11,4 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IRaffleActivityCountDao {
+
+    RaffleActivityCount queryRaffleActivityCountByActivityCountId(Long activityCountId);
+
 }

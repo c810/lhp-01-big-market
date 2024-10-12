@@ -1,4 +1,4 @@
-package pub.lhp.test.domain;
+package pub.lhp.test.domain.strategy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
