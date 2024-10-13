@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pub.lhp.domain.strategy.model.valobj.RuleTreeVO;
 import pub.lhp.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import pub.lhp.domain.strategy.repository.IStrategyRepository;
-import pub.lhp.infrastructure.redis.IRedisService;
+import pub.lhp.infrastructure.persistent.redis.IRedisService;
 import pub.lhp.types.common.Constants;
 
 import javax.annotation.Resource;

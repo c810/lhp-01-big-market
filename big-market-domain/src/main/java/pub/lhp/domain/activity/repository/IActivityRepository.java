@@ -4,6 +4,9 @@ import pub.lhp.domain.activity.model.aggregate.CreateOrderAggregate;
 import pub.lhp.domain.activity.model.entity.ActivityCountEntity;
 import pub.lhp.domain.activity.model.entity.ActivityEntity;
 import pub.lhp.domain.activity.model.entity.ActivitySkuEntity;
+import pub.lhp.domain.activity.model.valobj.ActivitySkuStockKeyVO;
+
+import java.util.Date;
 
 /**
  * @author lihaopeng
@@ -21,5 +24,19 @@ public interface IActivityRepository {
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
 
     void doSaveOrder(CreateOrderAggregate createOrderAggregate);
+
+    void cacheActivitySkuStockCount(String cacheKey, Integer stockCount);
+
+    boolean subtractionActivitySkuStock(Long sku, String cacheKey, Date endDateTime);
+
+    void activitySkuStockConsumeSendQueue(ActivitySkuStockKeyVO activitySkuStockKeyVO);
+
+    ActivitySkuStockKeyVO takeQueueValue();
+
+    void clearQueueValue();
+
+    void updateActivitySkuStock(Long sku);
+
+    void clearActivitySkuStock(Long sku);
 
 }

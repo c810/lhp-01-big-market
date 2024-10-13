@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.redisson.api.RMap;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import pub.lhp.infrastructure.redis.IRedisService;
+import pub.lhp.infrastructure.persistent.redis.IRedisService;
 
 import javax.annotation.Resource;
 

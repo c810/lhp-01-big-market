@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pub.lhp.domain.strategy.service.armory.IStrategyArmory;
 import pub.lhp.domain.strategy.service.armory.IStrategyDispatch;
-import pub.lhp.infrastructure.redis.IRedisService;
+import pub.lhp.infrastructure.persistent.redis.IRedisService;
 
 import javax.annotation.Resource;
 import java.util.*;
