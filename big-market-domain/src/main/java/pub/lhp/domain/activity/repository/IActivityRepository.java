@@ -1,5 +1,6 @@
 package pub.lhp.domain.activity.repository;
 
+import pub.lhp.domain.activity.model.aggregate.CreateOrderAggregate;
 import pub.lhp.domain.activity.model.entity.ActivityCountEntity;
 import pub.lhp.domain.activity.model.entity.ActivityEntity;
 import pub.lhp.domain.activity.model.entity.ActivitySkuEntity;
@@ -18,5 +19,7 @@ public interface IActivityRepository {
     ActivityEntity queryRaffleActivityByActivityId(Long activityId);
 
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
+
+    void doSaveOrder(CreateOrderAggregate createOrderAggregate);
 
 }

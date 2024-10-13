@@ -1,6 +1,7 @@
 package pub.lhp.infrastructure.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import pub.lhp.infrastructure.dao.po.RaffleActivityAccount;
 
 /**
  * @author lihaopeng
@@ -11,4 +12,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IRaffleActivityAccountDao {
+
+    void insert(RaffleActivityAccount raffleActivityAccount);
+
+    int updateAccountQuota(RaffleActivityAccount raffleActivityAccount);
+
 }
