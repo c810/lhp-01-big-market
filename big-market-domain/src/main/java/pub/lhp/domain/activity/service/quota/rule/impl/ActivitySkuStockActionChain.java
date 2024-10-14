@@ -1,4 +1,4 @@
-package pub.lhp.domain.activity.service.rule.impl;
+package pub.lhp.domain.activity.service.quota.rule.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import pub.lhp.domain.activity.model.entity.ActivitySkuEntity;
 import pub.lhp.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import pub.lhp.domain.activity.repository.IActivityRepository;
 import pub.lhp.domain.activity.service.armory.IActivityDispatch;
-import pub.lhp.domain.activity.service.rule.AbstractActionChain;
+import pub.lhp.domain.activity.service.quota.rule.AbstractActionChain;
 import pub.lhp.types.enums.ResponseCode;
 import pub.lhp.types.exception.AppException;
 

@@ -1,10 +1,10 @@
-package pub.lhp.domain.activity.service;
+package pub.lhp.domain.activity.service.quota;
 
 import pub.lhp.domain.activity.model.entity.ActivityCountEntity;
 import pub.lhp.domain.activity.model.entity.ActivityEntity;
 import pub.lhp.domain.activity.model.entity.ActivitySkuEntity;
 import pub.lhp.domain.activity.repository.IActivityRepository;
-import pub.lhp.domain.activity.service.rule.factory.DefaultActivityChainFactory;
+import pub.lhp.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 
 /**
  * @author lihaopeng
@@ -13,13 +13,13 @@ import pub.lhp.domain.activity.service.rule.factory.DefaultActivityChainFactory;
  * @description 抽奖活动的支撑类
  * @since 2024/10/13 21:01
  */
-public class RaffleActivitySupport {
+public class RaffleActivityAccountQuotaSupport {
 
     protected DefaultActivityChainFactory defaultActivityChainFactory;
 
     protected IActivityRepository activityRepository;
 
-    public RaffleActivitySupport(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
+    public RaffleActivityAccountQuotaSupport(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
         this.activityRepository = activityRepository;
         this.defaultActivityChainFactory = defaultActivityChainFactory;
     }

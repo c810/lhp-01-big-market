@@ -1,9 +1,9 @@
-package pub.lhp.domain.activity.service.rule.factory;
+package pub.lhp.domain.activity.service.quota.rule.factory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
-import pub.lhp.domain.activity.service.rule.IActionChain;
+import pub.lhp.domain.activity.service.quota.rule.IActionChain;
 
 import java.util.Map;
 

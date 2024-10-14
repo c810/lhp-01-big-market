@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  * @author lihaopeng
  * @version 1.0
  * @project big-market
- * @description 活动账户实体对象
+ * @description 活动账户（总）实体对象
  * @since 2024/10/12 22:39
  */
 @Data

@@ -6,10 +6,10 @@ import pub.lhp.domain.activity.model.valobj.ActivitySkuStockKeyVO;
  * @author lihaopeng
  * @version 1.0
  * @project big-market
- * @description 活动sku库存处理接口
+ * @description 抽奖活动SKU库存服务
  * @since 2024/10/13 22:20
  */
-public interface ISkuStock {
+public interface IRaffleActivitySkuStockService {
 
     /**
      * 获取活动sku库存消耗队列

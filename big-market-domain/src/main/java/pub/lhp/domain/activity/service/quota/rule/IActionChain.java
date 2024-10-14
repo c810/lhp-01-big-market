@@ -1,4 +1,4 @@
-package pub.lhp.domain.activity.service.rule;
+package pub.lhp.domain.activity.service.quota.rule;
 
 import pub.lhp.domain.activity.model.entity.ActivityCountEntity;
 import pub.lhp.domain.activity.model.entity.ActivityEntity;
