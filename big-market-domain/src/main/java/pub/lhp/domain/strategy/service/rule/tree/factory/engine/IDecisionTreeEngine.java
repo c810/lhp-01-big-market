@@ -2,6 +2,8 @@ package pub.lhp.domain.strategy.service.rule.tree.factory.engine;
 
 import pub.lhp.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 
+import java.util.Date;
+
 /**
  * @author lihaopeng
  * @version 1.0
@@ -11,6 +13,6 @@ import pub.lhp.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
  */
 public interface IDecisionTreeEngine {
 
-    DefaultTreeFactory.StrategyAwardVO process(String userId, Long strategyId, Integer awardId);
+    DefaultTreeFactory.StrategyAwardVO process(String userId, Long strategyId, Integer awardId, Date endDateTime);
 
 }

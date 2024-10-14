@@ -1,5 +1,6 @@
 package pub.lhp.test;
 
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +8,7 @@ import org.redisson.api.RMap;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pub.lhp.infrastructure.persistent.redis.IRedisService;
+import pub.lhp.trigger.api.dto.RaffleAwardListRequestDTO;
 
 import javax.annotation.Resource;
 
@@ -15,22 +17,12 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class ApiTest {
 
-    @Resource
-    private IRedisService redisService;
     @Test
     public void test() {
-        RMap<Object, Object> map = redisService.getMap("strategy_id_100001");
-        map.put(1, 101);
-        map.put(2, 101);
-        map.put(3, 101);
-        map.put(4, 102);
-        map.put(5, 102);
-        map.put(6, 102);
-        map.put(7, 103);
-        map.put(8, 103);
-        map.put(9, 104);
-        map.put(10, 105);
-        log.info("测试结果：{}", redisService.getFromMap("strategy_id_100001", 1).toString());
+        RaffleAwardListRequestDTO requestDTO = new RaffleAwardListRequestDTO();
+        requestDTO.setUserId("lihaopeng");
+        requestDTO.setActivityId(100301L);
+        log.info(JSON.toJSONString(requestDTO));
     }
 
     private double convert(double min){
