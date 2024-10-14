@@ -1,6 +1,9 @@
 package pub.lhp.domain.activity.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author lihaopeng
@@ -10,6 +13,9 @@ import lombok.Data;
  * @since 2024/10/14 10:34
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PartakeRaffleActivityEntity {
 
     /**

@@ -3,6 +3,8 @@ package pub.lhp.infrastructure.persistent.dao;
 import org.apache.ibatis.annotations.Mapper;
 import pub.lhp.infrastructure.persistent.po.RaffleActivitySku;
 
+import java.util.List;
+
 /**
  * @author lihaopeng
  * @version 1.0
@@ -18,5 +20,7 @@ public interface IRaffleActivitySkuDao {
     void updateActivitySkuStock(Long sku);
 
     void clearActivitySkuStock(Long sku);
+
+    List<RaffleActivitySku> queryActivitySkuListByActivityId(Long activityId);
 
 }

@@ -31,6 +31,12 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
 
     private final SecureRandom secureRandom = new SecureRandom();
 
+    @Override
+    public boolean assembleLotteryStrategyByActivityId(Long activityId) {
+        Long strategyId = repository.queryStrategyIdByActivityId(activityId);
+        return assembleLotteryStrategy(strategyId);
+    }
+
     /**
      * 装配 策略奖品概率查找表
      * 触发的时机可以为活动审核通过后进行调用

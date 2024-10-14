@@ -2,8 +2,8 @@ package pub.lhp.trigger.api;
 
 import pub.lhp.trigger.api.dto.RaffleAwardListRequestDTO;
 import pub.lhp.trigger.api.dto.RaffleAwardListResponseDTO;
-import pub.lhp.trigger.api.dto.RaffleRequestDTO;
-import pub.lhp.trigger.api.dto.RaffleResponseDTO;
+import pub.lhp.trigger.api.dto.RaffleStrategyRequestDTO;
+import pub.lhp.trigger.api.dto.RaffleStrategyResponseDTO;
 import pub.lhp.types.model.Response;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * @description 抽奖服务接口
  * @since 2024/10/5 12:12
  */
-public interface IRaffleService {
+public interface IRaffleStrategyService {
 
     /**
      * 策略装配接口
@@ -39,6 +39,6 @@ public interface IRaffleService {
      * @param requestDTO 请求参数
      * @return 抽奖结果
      */
-    Response<RaffleResponseDTO> randomRaffle(RaffleRequestDTO requestDTO);
+    Response<RaffleStrategyResponseDTO> randomRaffle(RaffleStrategyRequestDTO requestDTO);
 
 }
